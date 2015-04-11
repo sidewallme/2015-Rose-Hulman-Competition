@@ -1,5 +1,15 @@
-n <- train
+library(splitstackshape);
+library(class)
 
+trainData <- train[sample(nrow(train)),]
+rownames(trainData) <- NULL
+
+training <- trainData[1:30000,]
+testing <- trainData[30001:38720,]
+
+
+
+n <- training
 n <- concat.split.expanded(n, "NVCat", "-", type = "character", 
                            fill = 0, drop = TRUE)
 n <- concat.split.expanded(n, "Cat1", "-", type = "character", 
@@ -58,7 +68,7 @@ n$Claim<-NULL
 a <- n[1:ncol(n)-1]
 trainLabels <- as.factor(n$class)
 
-n <- tesing
+n <- testing
 
 n <- concat.split.expanded(n, "NVCat", "-", type = "character", 
                            fill = 0, drop = TRUE)
@@ -119,6 +129,12 @@ b <- n[1:ncol(n)-1]
 testLabels <- as.factor(n$class)
 
 common_cols <- intersect(colnames(a), colnames(b))
+
 trainingRose <- subset(a, select = common_cols)
 testingRose <- subset(b, select = common_cols)
 
+trainingRose$class <- NULL
+testingRose$class <-NULL
+
+trainingRose <- cbind(as.data.frame(scale(trainingRose[1])) , trainingRose[2:13], as.data.frame(scale(trainingRose[14:ncol(trainingRose)])))
+testingRose <- cbind(as.data.frame(scale(testingRose[1])) , testingRose[2:13], as.data.frame(scale(testingRose[14:ncol(testingRose)])))
