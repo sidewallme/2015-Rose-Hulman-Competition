@@ -4,7 +4,7 @@ library(devtools)
 library(h2o)
 
 
-n <- test
+n <- train
 n <- concat.split.expanded(n, "NVCat", "-", type = "character", 
                            fill = 0, drop = TRUE)
 n <- concat.split.expanded(n, "Cat1", "-", type = "character", 
@@ -60,11 +60,8 @@ n$class<-0
 n$class<-n$Claim
 n$Claim<-NULL
 
-normalize <- function (x){
-  return ((x-min(x))/(max(x)-min(x)))
-}
-nm_test_data <- as.data.frame(lapply(n[1:375],normalize))
-install.packages("class")
+common_cols <- intersect(colnames(dfr1), colnames(dfr2))
+trainingRose <- subset(n, select = common_cols)
 
 
 
