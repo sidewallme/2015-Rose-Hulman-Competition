@@ -1,3 +1,7 @@
+install.packages("h2o")
+install.packages("ipre")
+library(devtools)
+library(h2o)
 
 
 n <- test
@@ -31,6 +35,39 @@ n <- concat.split.expanded(n, "Model", "-", type = "character",
                            fill = 0, drop = TRUE)
 n <- concat.split.expanded(n, "Make", "-", type = "character", 
                            fill = 0, drop = TRUE)
+n <- concat.split.expanded(n, "CalendarYear", "-", type = "character", 
+                           fill = 0, drop = TRUE)
+n <- concat.split.expanded(n, "ModelYear", "-", type = "character", 
+                           fill = 0, drop = TRUE)
+n$RowID<-NULL
+n$Make<-NULL
+n$ModelYear<-NULL
+n$CalendarYear<-NULL
+n$Cat1<-NULL
+n$Cat2<-NULL
+n$Cat3<-NULL
+n$Cat4<-NULL
+n$Cat5<-NULL
+n$Cat6<-NULL
+n$Cat7<-NULL
+n$Cat8<-NULL
+n$Cat9<-NULL
+n$Cat10<-NULL
+n$Cat11<-NULL
+n$Cat12<-NULL
+n$NVCat<-NULL
+n$class<-0
+n$class<-n$Claim
+n$Claim<-NULL
+
+normalize <- function (x){
+  return ((x-min(x))/(max(x)-min(x)))
+}
+nm_test_data <- as.data.frame(lapply(n[1:375],normalize))
+install.packages("class")
+
+
+
 
 dat_h2o <- as.h2o(localH2O, dat, key = 'dat')
 localH2O = h2o.init(ip = "localhost", port = 54321, startH2O = TRUE, Xmx = '2g')
