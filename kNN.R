@@ -136,8 +136,8 @@ testingRose <- subset(b, select = common_cols)
 trainingRose$class <- NULL
 testingRose$class <-NULL
 
-trainingRose <- cbind(as.data.frame(scale(trainingRose[1])) , trainingRose[2:13], as.data.frame(scale(trainingRose[14:ncol(trainingRose)])))
-testingRose <- cbind(as.data.frame(scale(testingRose[1])) , testingRose[2:13], as.data.frame(scale(testingRose[14:ncol(testingRose)])))
+#trainingRose <- cbind(as.data.frame(scale(trainingRose[1])) , trainingRose[2:13], as.data.frame(scale(trainingRose[14:ncol(trainingRose)])))
+#testingRose <- cbind(as.data.frame(scale(testingRose[1])) , testingRose[2:13], as.data.frame(scale(testingRose[14:ncol(testingRose)])))
 
 pred <- knn (train=trainingRose, test=testingRose[1,], cl=trainLabels, k=15)
 xtab <- table(pred, testingRose)
